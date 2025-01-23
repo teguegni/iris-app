@@ -6,8 +6,8 @@ import os
 st.set_page_config(page_title="Iris Classification", layout="wide")
 
 # Load data
-current_dir = os.path.dirname(os.path.abspath(__file__))
-file_path = os.path.join(current_dir, 'iris.csv')
+current_dir = https://github.com/teguegni/iris-app/blob/main/Iris.py(https://github.com/teguegni/iris-app/blob/main(__file__))
+file_path = https://github.com/teguegni/iris-app/blob/main/Iris.csv(current_dir, 'iris.csv')
 
 try:
     df = pd.read_csv(file_path)
