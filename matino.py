@@ -19,7 +19,7 @@ alt.themes.enable("dark")
 # Initialiser page_selection dans l'état de session si pas déjà défini
 if 'page_selection' not in st.session_state:
     st.session_state.page_selection = 'a_propos'  # Page par défaut
-
+pass
 # Fonction pour mettre à jour page_selection
 def set_page_selection(page):
     st.session_state.page_selection = page
@@ -32,25 +32,25 @@ with st.sidebar:
     
     if st.button("🏷️ À Propos", use_container_width=True, on_click=set_page_selection, args=('a_propos',)):
         st.session_state.page_selection = 'a_propos'
-    
+    pass
     if st.button("📊 Jeu de Données", use_container_width=True, on_click=set_page_selection, args=('jeu_de_donnees',)):
         st.session_state.page_selection = 'jeu_de_donnees'
-
+pass
     if st.button("🔍 Analyse Exploratoire", use_container_width=True, on_click=set_page_selection, args=('analyse_exploratoire',)):
         st.session_state.page_selection = "analyse_exploratoire"
-
+pass
     if st.button("🧹 Nettoyage / Prétraitement", use_container_width=True, on_click=set_page_selection, args=('nettoyage_donnees',)):
         st.session_state.page_selection = "nettoyage_donnees"
-
+pass
     if st.button("🤖 Apprentissage Automatique", use_container_width=True, on_click=set_page_selection, args=('apprentissage_automatique',)): 
         st.session_state.page_selection = "apprentissage_automatique"
-
+pass
     if st.button("🔮 Prédiction", use_container_width=True, on_click=set_page_selection, args=('prediction',)): 
         st.session_state.page_selection = "prediction"
-
+pass 
     if st.button("📜 Conclusion", use_container_width=True, on_click=set_page_selection, args=('conclusion',)):
         st.session_state.page_selection = "conclusion"
-
+pass
     # Détails du projet
     st.subheader("Résumé")
     st.markdown("Un tableau de bord Streamlit mettant en évidence les résultats de l'entraînement de deux modèles de classification utilisant le jeu de données des fleurs Iris.")
