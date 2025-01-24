@@ -145,11 +145,9 @@ elif st.session_state.page_selection == 'prediction':
     
    if st.button("Prédire"):
        try:
-            import numpy as np
             from sklearn.neighbors import KNeighborsClassifier
             from sklearn.model_selection import train_test_split
             from sklearn.preprocessing import StandardScaler
-            import pandas as pd
            knn_model = KNeighborsClassifier(n_neighbors=3)  # Exemple d'un modèle simple KNN
            X = df.drop('species', axis=1)
            y = df['species']
