@@ -137,20 +137,7 @@ elif st.session_state.page_selection == 'eda':
 elif st.session_state.page_selection == 'prediction':
     # Page Prédiction
     from sklearn.neighbors import KNeighborsClassifier
-        def predict():
-    data = request.get_json()
-    try:
-        features = [data['sepal_length'], data['sepal_width'], data['petal_length'], data['petal_width']]
-        features_np = np.array([features])
-        prediction = model.predict(features_np)
-        return jsonify({'species': prediction.tolist()})
-    except KeyError as e:
-        return jsonify({'error': f"Clé manquante dans la requête : {e}"}), 400
-    except TypeError:
-        return jsonify({'error': "Les valeurs des caractéristiques doivent être numériques."}), 400
-    except ValueError:
-        return jsonify({'error': "Les données d'entrée doivent être au format numérique."}), 400
-
+       
     # Formulaire pour saisir les caractéristiques
     sepal_length = st.number_input("Longueur du sépale (cm)", min_value=0.0)
     sepal_width = st.number_input("Largeur du sépale (cm)", min_value=0.0)
