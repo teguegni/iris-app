@@ -147,7 +147,7 @@ elif st.session_state.page_selection == 'prediction':
     if st.button("Prédire"):
     try:
         # Vérification des entrées
-        if sepal_length < 0 or sepal_width < 0 or petal_length < 0 or petal_width < 0:
+     if sepal_length < 0 or sepal_width < 0 or petal_length < 0 or petal_width < 0:
             st.error("Les valeurs doivent être positives.")
         else:
             prediction = knn_model.predict([[sepal_length, sepal_width, petal_length, petal_width]])
