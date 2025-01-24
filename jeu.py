@@ -2,6 +2,7 @@
 import streamlit as st
 import pandas as pd
 import altair as alt
+from sklearn.neighbors import KNeighborsClassifier
 
 # Configuration de la page
 st.set_page_config(
@@ -72,6 +73,12 @@ except FileNotFoundError:
     st.error("Le fichier 'iris.csv' est introuvable. Veuillez vérifier son emplacement.")
     st.stop()
 
+# Entraîner le modèle KNN une seule fois
+X = df.drop('species', axis=1)  # Caractéristiques
+y = df['species']  # Cible
+knn_model = KNeighborsClassifier(n_neighbors=3)
+knn_model.fit(X, y)  # Entraîner sur tout le jeu de données
+
 # Page principale
 if st.session_state.page_selection == 'about':
     # Page À Propos
@@ -136,24 +143,19 @@ elif st.session_state.page_selection == 'eda':
 
 elif st.session_state.page_selection == 'prediction':
     # Page Prédiction
-    from sklearn.neighbors import KNeighborsClassifier
-       
-    # Formulaire pour saisir les caractéristiques
-    sepal_length = st.number_input("Longueur du sépale (cm)", min_value=0.0)
-    sepal_width = st.number_input("Largeur du sépale (cm)", min_value=0.0)
-    petal_length = st.number_input("Longueur du pétale (cm)", min_value=0.0)
-    petal_width = st.number_input("Largeur du pétale (cm)", min_value=0.0)
+    
+   # Formulaire pour saisir les caractéristiques
+   sepal_length = st.number_input("Longueur du sépale (cm)", min_value=0.0)
+   sepal_width = st.number_input("Largeur du sépale (cm)", min_value=0.0)
+   petal_length = st.number_input("Longueur du pétale (cm)", min_value=0.0)
+   petal_width = st.number_input("Largeur du pétale (cm)", min_value=0.0)
     
    if st.button("Prédire"):
-        try:
-            knn_model = KNeighborsClassifier(n_neighbors=3)  # Exemple d'un modèle simple KNN
-            X = df.drop('species', axis=1)
-            y = df['species']
-            knn_model.fit(X, y)  # Entraîner sur tout le jeu de données
-            
-            prediction = knn_model.predict([[sepal_length, sepal_width, petal_length, petal_width]])
-            species_predicted = prediction[0]
-            st.success(f"L'espèce prédite est : **{species_predicted}**")
-        
-        except Exception as e:
-            st.error(f"Erreur lors de la prédiction : {e}")
+       try:
+           prediction = knn_model.predict([[sepal_length, sepal_width, petal_length, petal_width]])
+           species_predicted = prediction[0]
+           st.success(f"L'espèce prédite est : **{species_predicted}**")
+       except Exception as e:
+           st.error(f"Erreur lors de la prédiction : {e}")
+
+
