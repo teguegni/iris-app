@@ -1,124 +1,161 @@
-# Import the required packages
-
+# Importer les bibliothèques nécessaires
 import streamlit as st
 import pandas as pd
 import altair as alt
-#import seaborn as sns
+from sklearn.neighbors import KNeighborsClassifier
 
-# Page configuration
+# Configuration de la page
 st.set_page_config(
-    page_title="Iris Classification", 
-    page_icon="assets/icon/icon.png",
+    page_title="Classification des Iris", 
+    page_icon="🌸",
     layout="wide",
-    initial_sidebar_state="expanded")
+    initial_sidebar_state="expanded"
+)
 
 alt.themes.enable("dark")
 
 # -------------------------
-# Sidebar
+# Barre latérale
 
-# Initialize page_selection in session state if not already set
+# Initialiser page_selection dans l'état de session si pas déjà défini
 if 'page_selection' not in st.session_state:
-    st.session_state.page_selection = 'about'  # Default page
+    st.session_state.page_selection = 'about'  # Page par défaut
 
-# Function to update page_selection
+# Fonction pour mettre à jour page_selection
 def set_page_selection(page):
     st.session_state.page_selection = page
 
 with st.sidebar:
-
-    st.title('Iris Classification')
-
-    # Page Button Navigation
-    st.subheader("Pages")
-
-    if st.button("About", use_container_width=True, on_click=set_page_selection, args=('about',)):
-        st.session_state.page_selection = 'about'
+    st.title('🌼 Classification des Iris')
     
-    if st.button("Dataset", use_container_width=True, on_click=set_page_selection, args=('dataset',)):
-        st.session_state.page_selection = 'dataset'
+    # Navigation par boutons avec des icônes
+    st.subheader("📂 Navigation")
+    
+    if st.button("🏷️ À Propos", use_container_width=True, on_click=set_page_selection, args=('about',)):
+        pass  # La mise à jour est gérée par la fonction set_page_selection
+    
+    if st.button("📊 Jeu de Données", use_container_width=True, on_click=set_page_selection, args=('dataset',)):
+        pass
+    
+    if st.button("🔍 Analyse Exploratoire", use_container_width=True, on_click=set_page_selection, args=('eda',)):
+        pass
+    
+    if st.button("🧹 Nettoyage / Prétraitement", use_container_width=True, on_click=set_page_selection, args=('data_cleaning',)):
+        pass
+    
+    if st.button("🤖 Apprentissage Automatique", use_container_width=True, on_click=set_page_selection, args=('machine_learning',)): 
+        pass
+    
+    if st.button("🔮 Prédiction", use_container_width=True, on_click=set_page_selection, args=('prediction',)): 
+        pass
+    
+    if st.button("📜 Conclusion", use_container_width=True, on_click=set_page_selection, args=('conclusion',)):
+        pass
 
-    if st.button("EDA", use_container_width=True, on_click=set_page_selection, args=('eda',)):
-        st.session_state.page_selection = "eda"
-
-    if st.button("Data Cleaning / Pre-processing", use_container_width=True, on_click=set_page_selection, args=('data_cleaning',)):
-        st.session_state.page_selection = "data_cleaning"
-
-    if st.button("Machine Learning", use_container_width=True, on_click=set_page_selection, args=('machine_learning',)): 
-        st.session_state.page_selection = "machine_learning"
-
-    if st.button("Prediction", use_container_width=True, on_click=set_page_selection, args=('prediction',)): 
-        st.session_state.page_selection = "prediction"
-
-    if st.button("Conclusion", use_container_width=True, on_click=set_page_selection, args=('conclusion',)):
-        st.session_state.page_selection = "conclusion"
-
-    # Project Details
-    st.subheader("Abstract")
-    st.markdown("A Streamlit dashboard highlighting the results of a training two classification models using the Iris flower dataset from Kaggle.")
-    st.markdown("📊 [Dataset](https://www.kaggle.com/datasets/arshid/iris-flower-dataset)")
-    st.markdown("📗 [Google Colab Notebook](https://colab.research.google.com/drive/1KJDBrx3akSPUW42Kbeepj64ZisHFD-NV?usp=sharing)")
-    st.markdown("🐙 [GitHub Repository](https://github.com/Zeraphim/Streamlit-Iris-Classification-Dashboard)")
-    st.markdown("by: [`Zeraphim`](https://jcdiamante.com)")
+    # Détails du projet
+    st.subheader("Résumé")
+    st.markdown("""
+        Un tableau de bord interactif pour explorer et classifier les données des fleurs Iris.
+        
+        - 📊 [Jeu de Données](https://www.kaggle.com/datasets/arshid/iris-flower-dataset)
+        - 📗 [Notebook Google Colab](https://colab.research.google.com/drive/1KJDBrx3akSPUW42Kbeepj64ZisHFD-NV?usp=sharing)
+        - 🐙 [Dépôt GitHub](https://github.com/Zeraphim/Streamlit-Iris-Classification-Dashboard)
+        
+        **Auteur :** [`Zeraphim`](https://jcdiamante.com)
+    """)
 
 # -------------------------
 
-# Load data
-df = pd.read_csv('iris.csv', delimiter=',')
+# Charger les données
+try:
+    df = pd.read_csv('iris.csv', delimiter=',')
+except FileNotFoundError:
+    st.error("Le fichier 'iris.csv' est introuvable. Veuillez vérifier son emplacement.")
+    st.stop()
 
-# Set page title
-st.title('ISJM BI - Exploration des données des Iris')
+# Entraîner le modèle KNN une seule fois
+X = df.drop('species', axis=1)  # Caractéristiques
+y = df['species']  # Cible
+knn_model = KNeighborsClassifier(n_neighbors=3)
+knn_model.fit(X, y)  # Entraîner sur tout le jeu de données
 
-st.header('Pré-analyse visuelles données données des Iris TP1')  # On définit l'en-tête d'une section
+# Page principale
+if st.session_state.page_selection == 'about':
+    # Page À Propos
+    st.title("🏷️ À Propos")
+    st.markdown("""
+        Cette application explore le célèbre jeu de données **Iris** et propose :
+        
+        - Une exploration visuelle des données.
+        - Un prétraitement et nettoyage des données.
+        - La construction et l'évaluation de modèles d'apprentissage automatique.
+        - Une interface interactive pour prédire l'espèce d'une fleur Iris.
+        
+        **Technologies utilisées :**
+        - Python (Streamlit, Altair, Pandas)
+        - Machine Learning (Scikit-learn)
+        
+        **Auteur : kenfack teguegni junior**
+        
+        ✉️ Contact : junior.kenfack@saintjeanmanagement.org 
+    """)
+
+elif st.session_state.page_selection == 'dataset':
+    # Page Jeu de Données
+    st.title("📊 Jeu de Données")
+    
+    # Afficher les premières lignes du DataFrame
+    if st.checkbox("Afficher le DataFrame"):
+        nb_rows = st.slider("Nombre de lignes à afficher :", min_value=5, max_value=50, value=10)
+        st.write(df.head(nb_rows))
+    
+    # Afficher les statistiques descriptives
+    if st.checkbox("Afficher les statistiques descriptives"):
+        st.write(df.describe())
+
+elif st.session_state.page_selection == 'eda':
+    # Page Analyse Exploratoire
+    st.title("🔍 Analyse Exploratoire")
+    
+    # Graphique interactif : Longueur vs Largeur du pétale
+    chart1 = alt.Chart(df).mark_circle(size=60).encode(
+        x='petal_length',
+        y='petal_width',
+        color='species',
+        tooltip=['petal_length', 'petal_width', 'species']
+    ).interactive()
+    
+    # Graphique interactif : Longueur vs Largeur du sépale
+    chart2 = alt.Chart(df).mark_circle(size=60).encode(
+        x='sepal_length',
+        y='sepal_width',
+        color='species',
+        tooltip=['sepal_length', 'sepal_width', 'species']
+    ).interactive()
+    
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        st.altair_chart(chart1, use_container_width=True)
+    
+    with col2:
+        st.altair_chart(chart2, use_container_width=True)
+
+elif st.session_state.page_selection == 'prediction':
+    # Page Prédiction
+    
+   # Formulaire pour saisir les caractéristiques
+   sepal_length = st.number_input("Longueur du sépale (cm)", min_value=0.0)
+   sepal_width = st.number_input("Largeur du sépale (cm)", min_value=0.0)
+   petal_length = st.number_input("Longueur du pétale (cm)", min_value=0.0)
+   petal_width = st.number_input("Largeur du pétale (cm)", min_value=0.0)
+    
+   if st.button("Prédire"):
+       try:
+           prediction = knn_model.predict([[sepal_length, sepal_width, petal_length, petal_width]])
+           species_predicted = prediction[0]
+           st.success(f"L'espèce prédite est : **{species_predicted}**")
+       except Exception as e:
+           st.error(f"Erreur lors de la prédiction : {e}")
 
 
-# Afficher les premières lignes des données chargées data
-#st.write(df.head())
-	
-st.subheader('Description des données')  # Sets a subheader for a subsection
-
-# Show Dataset
-if st.checkbox("Boutons de prévisualisation du DataFrame"):
-	if st.button("Head"):
-		st.write(df.head(2))
-	if st.button("Tail"):
-		st.write(df.tail())
-	if st.button("Infos"):
-		st.write(df.info())
-	if st.button("Shape"):
-		st.write(df.shape)
-	else:
-		st.write(df.head(2))
-
-
-# Create chart
-chart = alt.Chart(df).mark_point().encode(
-    x='petal_length',
-    y='petal_width',
-    color="species"
-)
-
-# Display chart
-st.write(chart)
-
-#Interactive design representation 
-chart2 = alt.Chart(df).mark_circle(size=60).encode(
-    x='sepal_length',
-    y='sepal_width',
-    color='species',
-    tooltip=['sepal_length', 'sepal_width', 'petal_length', 'petal_width']
-).interactive()
-
-st.write(chart2)
-
-
-# About
-
-if st.button("About App"):
-	st.subheader("App d'exploration des données des Iris")
-	st.text("Contruite avec Streamlit")
-	st.text("Thanks to the Streamlit Team Amazing Work")
-
-if st.checkbox("By"):
-	st.text("Stéphane C. K. Tékouabou")
-	st.text("ctekouaboukoumetio@gmail.com")
