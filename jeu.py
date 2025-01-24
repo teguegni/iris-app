@@ -2,7 +2,7 @@
 import streamlit as st
 import pandas as pd
 import altair as alt
-from sklearn.neighbors import KNeighborsClassifier
+#from sklearn.neighbors import KNeighborsClassifier
 
 # Configuration de la page
 st.set_page_config(
