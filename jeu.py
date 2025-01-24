@@ -144,14 +144,16 @@ elif st.session_state.page_selection == 'prediction':
     petal_length = st.number_input("Longueur du pétale (cm)", min_value=0.0)
     petal_width = st.number_input("Largeur du pétale (cm)", min_value=0.0)
     
-    if st.button("Prédire"):
+   if st.button("Prédire"):
         try:
-        # Vérification des entrées
-     if sepal_length < 0 or sepal_width < 0 or petal_length < 0 or petal_width < 0:
-            st.error("Les valeurs doivent être positives.")
-        else:
+            knn_model = KNeighborsClassifier(n_neighbors=3)  # Exemple d'un modèle simple KNN
+            X = df.drop('species', axis=1)
+            y = df['species']
+            knn_model.fit(X, y)  # Entraîner sur tout le jeu de données
+            
             prediction = knn_model.predict([[sepal_length, sepal_width, petal_length, petal_width]])
             species_predicted = prediction[0]
             st.success(f"L'espèce prédite est : **{species_predicted}**")
-       except Exception as e:
-          st.error(f"Erreur lors de la prédiction : {e}")
+        
+        except Exception as e:
+            st.error(f"Erreur lors de la prédiction : {e}")
