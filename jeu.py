@@ -157,6 +157,4 @@ elif st.session_state.page_selection == 'prediction':
         
         except Exception as e:
             st.error(f"Erreur lors de la prédiction : {e}")
- if st.checkbox("By"):
-	st.text("Stéphane C. K. Tékouabou")
-	st.text("junior.kenfack@saintjeanmanagement.org")           
+ 
