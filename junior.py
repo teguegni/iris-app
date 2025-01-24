@@ -145,8 +145,6 @@ elif st.session_state.page_selection == 'prediction':
     
    if st.button("Prédire"):
        try:
-            from flask import Flask, request, jsonify
-            import pickle
             import numpy as np
             from sklearn.neighbors import KNeighborsClassifier
             from sklearn.model_selection import train_test_split
