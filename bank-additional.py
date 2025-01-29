@@ -159,8 +159,8 @@ elif st.session_state.page_selection == 'prediction':
     if st.button("Prédire"):  
         from sklearn.model_selection import train_test_split  
         from sklearn.preprocessing import StandardScaler  
-        from sklearn.ensemble import RandomForestClassifier  
- try:  
+        from sklearn.ensemble import RandomForestClassifier
+    try:  
             # Prétraitement potentiel des données d'entrée et des caractéristiques  
             # (Assurez-vous que le modèle est déjà formé au préalable et chargé ici)  
             X = df[['age', 'duration', 'campaign']]  # Ajustez selon vos colonnes de caractéristiques.  
@@ -179,8 +179,8 @@ elif st.session_state.page_selection == 'prediction':
 
             # Évaluation  
             print(confusion_matrix(y_test, y_pred))  
-            print(classification_report(y_test, y_pred)) 
- except Exception as e:  
+            print(classification_report(y_test, y_pred))
+    except Exception as e:  
             st.error(f"Une erreur est survenue : {e}")
 
     
