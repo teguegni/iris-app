@@ -160,6 +160,8 @@ elif st.session_state.page_selection == 'prediction':
         from sklearn.model_selection import train_test_split  
         from sklearn.preprocessing import StandardScaler  
         from sklearn.ensemble import RandomForestClassifier
+        import seaborn as sns  
+        import matplotlib.pyplot as plt  
     try:  
             # Prétraitement potentiel des données d'entrée et des caractéristiques  
             # (Assurez-vous que le modèle est déjà formé au préalable et chargé ici)  
