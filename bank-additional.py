@@ -114,15 +114,8 @@ elif st.session_state.page_selection == 'analyse_exploratoire':
         tooltip=['age', 'job', 'y']  
     ).interactive()  
     
-    st.altair_chart(age_job_chart, use_container_width=True)  
-
-    # Analyse des corrélations  
-    st.subheader("Analyse des corrélations")  
-    correlation_matrix = df.corr()    
-    # Affichage de la heatmap  
-    fig, ax = plt.subplots()  
-    sns.heatmap(correlation_matrix, annot=True, fmt=".2f", cmap='coolwarm', ax=ax)  
-    st.pyplot(fig)
+    st.altair_chart(age_job_chart, use_container_width=True)      
+  
 elif st.session_state.page_selection == 'nettoyer les données ':
      # Traitement des variables catégorielles  
     data = pd.get_dummies(data, drop_first=True)  
@@ -135,13 +128,12 @@ elif st.session_state.page_selection == 'nettoyer les données ':
     # Séparation des features et de la target  
     X = data.drop('y', axis=1)  # On suppose que 'y_yes' est la colonne cible  
     y = data['y']  
-elif st.session_state.page_selection == 'apprentissage_automatique':  
+elif st.session_state.page_selection == 'apprentissage_automatique':
+    from sklearn.model_selection import train_test_split
     from sklearn.ensemble import RandomForestClassifier  
     from sklearn.metrics import classification_report, confusion_matrix  
-    
     # Séparation des données en ensembles d'entraînement et de test  
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)  
-
     # Création et entraînement du modèle  
     model = RandomForestClassifier(n_estimators=100, random_state=42)  
     model.fit(X_train, y_train)  
