@@ -86,6 +86,37 @@ if st.session_state.page_selection == 'a_propos':
     """)  
 
 elif st.session_state.page_selection == 'jeu_de_donnees':  
+# Analyse Exploratoire des données 
+if st.session_state.page_selection == 'Analyse_Exploratoire_des données':  
+    # analyse exploratoire 
+    st.title("🏷️ Analyse_Exploratoire")    
+elif st.session_state.page_selection == 'analyse_exploratoire':  
+    st.title("🔍 Analyse Exploratoire")  
+    
+    # Vérification des valeurs manquantes  
+    st.subheader("Vérification des valeurs manquantes")  
+    missing_values = df.isnull().sum()  
+    st.write(missing_values[missing_values > 0])  
+    
+    # Visualisation de la relation entre l'âge et le métier  
+    st.subheader("Relation entre l'âge et le métier")  
+    age_job_chart = alt.Chart(df).mark_circle(size=60).encode(  
+        x='age',  
+        y='job',  
+        color='y',  # Utilisez 'y' pour distinguer les souscriptions  
+        tooltip=['age', 'job', 'y']  
+    ).interactive()  
+    
+    st.altair_chart(age_job_chart, use_container_width=True)  
+
+    # Analyse des corrélations  
+    st.subheader("Analyse des corrélations")  
+    correlation_matrix = df.corr()  
+    
+    # Affichage de la heatmap  
+    fig, ax = plt.subplots()  
+    sns.heatmap(correlation_matrix, annot=True, fmt=".2f", cmap='coolwarm', ax=ax)  
+    st.pyplot(fig)   
     # Page Jeu de Données  
     st.title("📊 Jeu de Données")  
     
