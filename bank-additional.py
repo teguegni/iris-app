@@ -116,7 +116,9 @@ elif st.session_state.page_selection == 'analyse_exploratoire':
     
     st.altair_chart(age_job_chart, use_container_width=True)      
   
-elif st.session_state.page_selection == 'nettoyer les données ':
+elif st.session_state.page_selection == 'nettoyage_donnees ':
+     # Page Analyse Exploratoire  
+    st.title("🔍nettoyage_donnees ") 
      # Traitement des variables catégorielles  
     data = pd.get_dummies(data, drop_first=True)  
     import pandas as pd  
