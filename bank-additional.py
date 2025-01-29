@@ -135,8 +135,7 @@ elif st.session_state.page_selection == 'nettoyer les données ':
     # Séparation des features et de la target  
     X = data.drop('y', axis=1)  # On suppose que 'y_yes' est la colonne cible  
     y = data['y']  
-elif st.session_state.page_selection == 'apprentissage_automatique':
-    from sklearn.model_selection import train_test_split  
+elif st.session_state.page_selection == 'apprentissage_automatique':  
     from sklearn.ensemble import RandomForestClassifier  
     from sklearn.metrics import classification_report, confusion_matrix  
     
