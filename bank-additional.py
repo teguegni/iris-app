@@ -180,7 +180,7 @@ elif st.session_state.page_selection == 'prediction':
             # Évaluation  
             print(confusion_matrix(y_test, y_pred))  
             print(classification_report(y_test, y_pred)) 
-        except Exception as e:  
+ except Exception as e:  
             st.error(f"Une erreur est survenue : {e}")
 
     
