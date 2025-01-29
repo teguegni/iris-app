@@ -2,9 +2,6 @@
 import streamlit as st  
 import pandas as pd  
 import altair as alt  
-from sklearn.model_selection import train_test_split  
-from sklearn.preprocessing import StandardScaler  
-from sklearn.ensemble import RandomForestClassifier  
 
 # Configuration de la page  
 st.set_page_config(  
@@ -126,6 +123,10 @@ elif st.session_state.page_selection == 'prediction':
     campaign = st.number_input("Nombre de contacts lors de la campagne", min_value=1, value=1)  
     
     if st.button("Prédire"):  
+        from sklearn.model_selection import train_test_split  
+        from sklearn.preprocessing import StandardScaler  
+        from sklearn.ensemble import RandomForestClassifier  
+
         try:  
             # Prétraitement potentiel des données d'entrée et des caractéristiques  
             # (Assurez-vous que le modèle est déjà formé au préalable et chargé ici)  
