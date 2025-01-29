@@ -139,7 +139,7 @@ elif st.session_state.page_selection == 'apprentissage_automatique':
     from sklearn.model_selection import train_test_split  
     from sklearn.ensemble import RandomForestClassifier  
     from sklearn.metrics import classification_report, confusion_matrix  
-
+    
     # Séparation des données en ensembles d'entraînement et de test  
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)  
 
@@ -157,7 +157,6 @@ elif st.session_state.page_selection == 'prediction':
     campaign = st.number_input("Nombre de contacts lors de la campagne", min_value=1, value=1)  
     
     if st.button("Prédire"): 
-        import scikit-learn 
         from sklearn.model_selection import train_test_split  
         from sklearn.preprocessing import StandardScaler  
         from sklearn.ensemble import RandomForestClassifier
