@@ -1,6 +1,7 @@
 import pandas as pd  
 import streamlit as st  
-import altair as alt    
+import altair as alt 
+from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier  
 from sklearn.preprocessing import LabelEncoder  
 
@@ -49,7 +50,6 @@ age_job_chart = alt.Chart(df).mark_circle(size=60).encode(
 st.write(age_job_chart)  
 
 # Prediction Page  
-from sklearn.model_selection import train_test_split
 if page_selection == "Prediction":  
     st.subheader("Make a Prediction")  
     
