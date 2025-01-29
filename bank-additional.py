@@ -119,15 +119,27 @@ elif st.session_state.page_selection == 'analyse_exploratoire':
 elif st.session_state.page_selection == 'nettoyer les données ':
      # Traitement des variables catégorielles  
     data = pd.get_dummies(data, drop_first=True)  
+    import pandas as pd  
+    import seaborn as sns  
+    import matplotlib.pyplot as plt    
+    # Remplacer 'unknown' par le mode de chaque colonne  
+    for column in df.columns:  
+        if df[column].dtype == 'object':  # Vérifie si la colonne est de type object (catégorielle)  
+            mode_value = df[column].mode()[0]  
+            df[column] = df[column].replace('unknown', mode_value)  
 
-    # Normalisation des données (si nécessaire)  
-    from sklearn.preprocessing import StandardScaler  
+    # Afficher le résultat des tables croisées pour chaque colonne d'intérêt  
+    for column in df.columns:  
+        if df[column].dtype == 'object' and column != 'y':  # Ignore la colonne cible 'y'   
+            print(f"Table croisée pour {column}:")  
+            print(df.groupby(['y', column])[column].size().unstack(level=0))  
 
-    scaler = StandardScaler()  
-    data[['age', 'duration', 'campaign', 'pdays', 'previous']] = scaler.fit_transform(data[['age', 'duration', 'campaign', 'pdays', 'previous']])
-    # Séparation des features et de la target  
-    X = data.drop('y', axis=1)  # On suppose que 'y_yes' est la colonne cible  
-    y = data['y']  
+            # Afficher le countplot  
+            plt.figure(figsize=(10, 6))  
+            sns.countplot(x=df["y"], hue=df[column])  
+            plt.title(f'Countplot pour {column}')  
+            plt.show()
+   
 elif st.session_state.page_selection == 'apprentissage_automatique':
     from sklearn.model_selection import train_test_split
     from sklearn.ensemble import RandomForestClassifier  
