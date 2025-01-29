@@ -90,7 +90,7 @@ elif st.session_state.page_selection == 'jeu_de_donnees':
     
     # Afficher les premières lignes du DataFrame  
     if st.checkbox("Afficher le DataFrame"):  
-        nb_rows = st.slider("Nombre de lignes à afficher :", min_value=5, max_value=50, value=10)  
+        nb_rows = st.slider("Nombre de lignes à afficher :", min_value=105, max_value=41189, value=10)  
         st.write(df.head(nb_rows))  
     
     # Afficher les statistiques descriptives  
@@ -106,14 +106,29 @@ elif st.session_state.page_selection == 'analyse_exploratoire':
     missing_values = df.isnull().sum()  
     st.write(missing_values[missing_values > 0])  
     # Visualisation de la relation entre l'âge et le métier  
+      # Convertir 'job' en catégorie pour un meilleur affichage  
+      df['job'] = df['job'].astype('category')  
+
+    # Créer le graphique d'Altair  
+    age_job_chart = (  
+    alt.Chart(df)  
+    .mark_circle(size=60)  
+    .encode(  
+        x=alt.X('age:Q', title='Âge'),  # Assurez-vous que l'âge est traité comme une mesure  
+        y=alt.Y('job:O', title='Métier', sort=None),  # Utiliser Order pour classer les métiers  
+        color='y:N',  # Une couleur par catégorie 'y'  
+        tooltip=['age:Q', 'job:N', 'y:N']  # Améliorer les info-bulles  
+    )  
+    .properties(  
+        title='Relation entre l\'âge et le métier',  
+        width=600,  
+        height=400  
+        )  
+        .interactive()  
+    )  
+
+    # Afficher le graphique dans Streamlit  
     st.subheader("Relation entre l'âge et le métier")  
-    age_job_chart = alt.Chart(df).mark_circle(size=60).encode(  
-        x='age',  
-        y='job',  
-        color='y',  # Utilisez 'y' pour distinguer les souscriptions  
-        tooltip=['age', 'job', 'y']  
-    ).interactive()  
-    
     st.altair_chart(age_job_chart, use_container_width=True)      
   
 elif st.session_state.page_selection == 'nettoyage_donnees ':
