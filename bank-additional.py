@@ -156,7 +156,8 @@ elif st.session_state.page_selection == 'prediction':
     duration = st.number_input("Durée du contact (seconds)", min_value=0, value=60)  
     campaign = st.number_input("Nombre de contacts lors de la campagne", min_value=1, value=1)  
     
-    if st.button("Prédire"):  
+    if st.button("Prédire"): 
+        import scikit-learn 
         from sklearn.model_selection import train_test_split  
         from sklearn.preprocessing import StandardScaler  
         from sklearn.ensemble import RandomForestClassifier
